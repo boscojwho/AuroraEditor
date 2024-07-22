@@ -123,6 +123,23 @@ public final class ThemeModel: ObservableObject {
                 self.selectedTheme = try? getDefaultTheme(with: NSApp.effectiveAppearance.name)
             }
     }
+    
+    /// Search for the provided `theme`'s appearance variants.
+    /// - Parameter appearance: Search for this appearance variant.
+    /// - Returns: Self, if cannot find current theme for appeareance.
+    public func getTheme(_ theme: AuroraTheme, with appearance: NSAppearance.Name) -> AuroraTheme {
+        let colorSchemeAgnosticThemeName = theme
+            .name
+            .replacingOccurrences(of: "dark", with: "")
+            .replacingOccurrences(of: "light", with: "")
+            .lowercased()
+        if appearance == .darkAqua || appearance == .vibrantDark {
+            return self.darkThemes.first { $0.name.lowercased().contains(colorSchemeAgnosticThemeName) } ?? theme
+        } else if appearance == .aqua || appearance == .vibrantLight {
+            return self.lightThemes.first { $0.name.lowercased().contains(colorSchemeAgnosticThemeName) } ?? theme
+        }
+        return theme
+    }
 
     private func getDefaultTheme(with appearance: NSAppearance.Name) throws -> AuroraTheme? {
         enum DefaultTheme {
