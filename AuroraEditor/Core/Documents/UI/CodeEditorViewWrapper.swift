@@ -15,7 +15,7 @@ import AuroraEditorSourceEditor
 public struct CodeEditorViewWrapper: View {
     @Environment(\.colorScheme)
     var colorScheme
-    
+
     /// The code file document
     @ObservedObject
     private var codeFile: CodeFileDocument
@@ -122,16 +122,20 @@ public struct CodeEditorViewWrapper: View {
             coordinators: []
         )
         .onAppear {
-            self.editorTheme = ThemeModel.shared.getTheme(theme, with: colorScheme == .dark ? .darkAqua : .aqua).editorTheme()
+            self.editorTheme = ThemeModel.shared
+                .getTheme(theme, with: colorScheme == .dark ? .darkAqua : .aqua)
+                .editorTheme()
         }
         .onChange(of: colorScheme) { value in
-            /// Ignore if user explicitly opts for dark/light mode.
-//            guard theme.appearance == .universal else { return }
             switch value {
             case .dark:
-                self.editorTheme = ThemeModel.shared.getTheme(theme, with: value == .dark ? .darkAqua : .aqua).editorTheme()
+                self.editorTheme = ThemeModel.shared
+                    .getTheme(theme, with: value == .dark ? .darkAqua : .aqua)
+                    .editorTheme()
             case .light:
-                self.editorTheme = ThemeModel.shared.getTheme(theme, with: value == .dark ? .darkAqua : .aqua).editorTheme()       
+                self.editorTheme = ThemeModel.shared
+                    .getTheme(theme, with: value == .dark ? .darkAqua : .aqua)
+                    .editorTheme()
             @unknown default:
                 break
             }

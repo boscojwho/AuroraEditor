@@ -91,10 +91,9 @@ public final class ThemeModel: ObservableObject {
                 ThemeJsonLoader.shared.loadTmThemeXml(from: fileURL) {
 
                 guard let terminalColors = try theme.terminal.allProperties() as? [String: AuroraTheme.Attributes],
-                      let editorColors = try theme.editor.allProperties().filter(
-                        {
-                        $0.value is AuroraTheme.Attributes
-                        }) as? [String: AuroraTheme.Attributes]
+                      let editorColors = try theme.editor
+                    .allProperties()
+                    .filter({ $0.value is AuroraTheme.Attributes }) as? [String: AuroraTheme.Attributes]
                 else {
                     fatalError("failed to load terminal and editor colors")
                 }
@@ -123,7 +122,7 @@ public final class ThemeModel: ObservableObject {
                 self.selectedTheme = try? getDefaultTheme(with: NSApp.effectiveAppearance.name)
             }
     }
-    
+
     /// Search for the provided `theme`'s appearance variants.
     /// - Parameter appearance: Search for this appearance variant.
     /// - Returns: Self, if cannot find current theme for appeareance.

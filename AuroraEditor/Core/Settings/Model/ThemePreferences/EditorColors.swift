@@ -69,7 +69,6 @@ public extension AuroraTheme {
 
         /// selectionColor
         public var selection: Attributes
-        
         public var keywords: Attributes
         public var commands: Attributes
         public var types: Attributes
@@ -133,7 +132,7 @@ public extension AuroraTheme {
                 case "numbers":     self.numbers = newValue
                 case "strings":     self.strings = newValue
                 case "characters":  self.characters = newValue
-                case "comments":    self.comments = newValue                    
+                case "comments":    self.comments = newValue
                 default: fatalError("Invalid key")
                 }
             }
